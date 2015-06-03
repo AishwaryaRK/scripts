@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-MOTD_URL="https://raw.github.com/messageoftheday/scripts/master/.motd.sh"
-PLIST_URL="https://raw.github.com/messageoftheday/scripts/master/sh.motd.generator.plist"
+MOTD_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/.motd.sh"
+PLIST_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/sh.motd.generator.plist"
 TERMINAL="please open a new terminal window to view the motd"
 
 echo "installing motd.sh"
