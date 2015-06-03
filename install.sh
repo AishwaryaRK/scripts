@@ -95,7 +95,7 @@ motd_install()
       cp sh.motd.generator.plist ~/Library/LaunchAgents/sh.motd.generator.plist.tmp
     else
       ### otherwise download it
-      curl "${PLIST_URL}" -o /Library/LaunchAgents/sh.motd.generator.plist.tmp
+      curl -sL "${PLIST_URL}" -o /Library/LaunchAgents/sh.motd.generator.plist.tmp
     fi
 
     ## replace set user in plist to current user
