@@ -40,6 +40,7 @@ motd_configure()
   {
     if [ motd_is_dev ]; then
       ## development
+      echo 'Development mode'
       motd_local_update
     else
       ## production
@@ -98,13 +99,13 @@ motd_configure()
     done
   }
 
-  motd_configure_stock()
+  motd_configure_stocks()
   {
     sed -i bak -e "s/STOCKS=\"\"/STOCKS=\"$1\"/" ~/.motd.sh
   }
 
   # ask if installer should configure stocks
-  motd_prompt_stock()
+  motd_prompt_stocks()
   {
     # prompt user for stocks (yn)
     # if (y) then prompt for comma delimited stock symbols
@@ -162,6 +163,7 @@ motd_configure()
   {
     printf "Fetching mac include..."
     if [ motd_is_dev ]; then
+        echo 'LOCAL!!!'
         motd_local_mac_include
     else
         motd_remote_mac_include
@@ -241,7 +243,7 @@ motd_configure()
 
   motd_fetch_includes
   motd_configure_os
-  motd_update_motd
+  motd_update
 }
 
 motd_install()
@@ -249,8 +251,10 @@ motd_install()
   echo "installing motd.sh"
   motd_configure
   motd_prompt_weather
-  motd_prompt_stock
-  motd_prompt_inspiration
+  motd_prompt_stocks
+  motd_prompt_quotes
+  motd_setup_generator
+  motd_post_install_instructions
 }
 
 motd_install
