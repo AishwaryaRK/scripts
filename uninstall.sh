@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 motd_uninstall()
 {
   # http://nathangrigg.net/2012/07/schedule-jobs-using-launchd/
