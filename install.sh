@@ -28,7 +28,7 @@ motd_install()
       [Yy]* )
         echo "please enter a location (e.g. address/city/location/zip)"
         read WEATHER
-        WEATHER="$(echo "$WEATHER" | tr ' ' '%20')"
+        WEATHER=`echo "$WEATHER"|sed 's/ /%20/g'`
         sed -i bak -e "s/WEATHER=\"\"/WEATHER=\"$WEATHER\"/" ~/.motd.sh
         # now we want to ask user if they want fahrenheit or celsius
         while read -p "do you want degrees in fahrenheit (y) or celsius (n)? (y/n)" yn; do
