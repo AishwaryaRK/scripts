@@ -28,6 +28,7 @@ motd_install()
       [Yy]* )
         echo "please enter a location (e.g. address/city/location/zip)"
         read WEATHER
+        WEATHER="$(echo "$WEATHER" | tr ' ' '%20')"
         sed -i bak -e "s/WEATHER=\"\"/WEATHER=\"$WEATHER\"/" ~/.motd.sh
         # now we want to ask user if they want fahrenheit or celsius
         while read -p "do you want degrees in fahrenheit (y) or celsius (n)? (y/n)" yn; do
@@ -58,6 +59,9 @@ motd_install()
           [Yy]* )
             echo "you added stocks!";
             read -p "please enter stocks on NASDAQ separated by a comma (.e.g TSLA,SCTY)" STOCKS
+            # strip whitespace from stocks
+            # http://unix.stackexchange.com/a/156581
+            STOCKS="$(echo "$STOCKS" | tr -d ' ')"
             sed -i bak -e "s/STOCKS=\"\"/STOCKS=\"$STOCKS\"/" ~/.motd.sh
             break;;
           [Nn]* ) break;;
