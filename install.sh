@@ -23,7 +23,7 @@ motd_configure()
   {
     cp .motd.sh ~/.motd.sh
     ## replace http://motd.sh with http://localhost:3000
-    sed -i bak -e "s/http:\/\/motd.sh/http:\/\/localhost:3000/" ~/.motd.sh
+    #sed -i bak -e "s/http:\/\/motd.sh/http:\/\/localhost:3000/" ~/.motd.sh
   }
 
   # fetch an MOTD script update from the server
@@ -40,7 +40,6 @@ motd_configure()
   {
     if [ motd_is_dev ]; then
       ## development
-      echo 'Development mode'
       motd_local_update
     else
       ## production
