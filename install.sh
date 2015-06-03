@@ -125,6 +125,7 @@ motd_install()
     echo ""
     echo ""
     echo "successfully installed motd.sh"
+    bash ~/.motd.sh
     echo "$TERMINAL"
     exit 1
 
