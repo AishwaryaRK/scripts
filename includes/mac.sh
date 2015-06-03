@@ -15,7 +15,7 @@ rm ~/Library/LaunchAgents/sh.motd.generator.plist.tmp
 ## schedule jobs
 ## http://nathangrigg.net/2012/07/schedule-jobs-using-launchd/
 launchctl load -w ~/Library/LaunchAgents/sh.motd.generator.plist
-launchctl start sh.motd.generator
+launchctl start ../sh.motd.generator
 
 ## give the user a preview by opening terminal
 ## http://stackoverflow.com/a/7177891

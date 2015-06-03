@@ -138,7 +138,7 @@ motd_configure()
 
   motd_configure_os()
   {
-  # detect os
+    # detect os
     echo "detecting operating system"
 
     if [ "$(uname)" == "Darwin" ]; then
@@ -163,12 +163,13 @@ motd_configure()
     fi
   }
 
+  motd_configure_os
 }
 
 motd_install()
 {
   echo "installing motd.sh"
-  motd_configure_os
+  motd_configure
   motd_update_motd
   motd_prompt_weather
   motd_prompt_stock
