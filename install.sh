@@ -140,20 +140,20 @@ motd_configure()
 
   motd_fetch_includes()
   {
-    if [ ! -d "includes" ]; then
+    if [ ! -d "/tmp/includes" ]; then
       echo "Making includes directory"
-      mkdir includes
+      mkdir /tmp/includes
     fi
 
-    if [ ! -e "includes/mac.sh" ]; then
+    if [ ! -e "/tmp/includes/mac.sh" ]; then
       printf "Fetching mac include..."
-      curl -sL "${MAC_INCLUDE_URL}" -o includes/mac.sh
+      curl -sL "${MAC_INCLUDE_URL}" -o /tmp/includes/mac.sh
       printf "done\n"
     fi
 
-    if [ ! -e "includes/linux.sh" ]; then
+    if [ ! -e "/tmp/includes/linux.sh" ]; then
       printf "Fetching linux include..."
-      curl -sL "${LINUX_INCLUDE_URL}" -o includes/linux.sh
+      curl -sL "${LINUX_INCLUDE_URL}" -o /tmp/includes/linux.sh
       printf "done\n"
     fi
   }
@@ -166,11 +166,11 @@ motd_configure()
     if [ "$(uname)" == "Darwin" ]; then
       ## mac os x
       echo "detected mac os x"
-      source includes/mac.sh
+      source /tmp/includes/mac.sh
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
       ## linux
       echo "detected linux"
-      source includes/linux.sh
+      source /tmp/includes/linux.sh
     elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
       ## windows
       ## TODO: add support
