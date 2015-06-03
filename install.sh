@@ -13,8 +13,8 @@ motd_install()
   if [ "$MOTD_ENV" = "development" ]; then
     ## development
     cp .motd.sh ~/.motd.sh
-    ## replace https://motd.sh with http://localhost:3000
-    sed -i bak -e "s/https:\/\/motd.sh/http:\/\/localhost:3000/" ~/.motd.sh
+    ## replace http://motd.sh with http://localhost:3000
+    sed -i bak -e "s/http:\/\/motd.sh/http:\/\/localhost:3000/" ~/.motd.sh
   else
     ## production
     ## download latest script
