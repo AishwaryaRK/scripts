@@ -9,7 +9,7 @@ echo "installing motd.sh"
 # detect environment
 # http://stackoverflow.com/a/3826462
 # http://stackoverflow.com/a/17072017
-if [ \( -z "$ENV" \) -o \( "$ENV" == "development" \) ]; then
+if [ "$MOTD_ENV" = "development" ]; then
   ## development
   cp .motd.sh ~/.motd.sh
   ## replace https://motd.sh with http://localhost:3000
