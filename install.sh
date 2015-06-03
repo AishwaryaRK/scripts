@@ -9,6 +9,15 @@ TERMINAL="please open a new terminal window to view the motd"
 # this defines commands used by the MOTD script
 motd_configure()
 {
+  motd_is_dev()
+  {
+    if [ "$MOTD_ENV" = "development" ]; then
+        return true
+    else
+        return false
+    fi
+  }
+
   # install the locally bundled version of the MOTD script
   motd_local_update()
   {
@@ -29,7 +38,7 @@ motd_configure()
   # http://stackoverflow.com/a/17072017
   motd_update()
   {
-    if [ "$MOTD_ENV" = "development" ]; then
+    if [ motd_is_dev ]; then
       ## development
       motd_local_update
     else
@@ -138,23 +147,66 @@ motd_configure()
     done
   }
 
-  motd_fetch_includes()
+  motd_local_mac_include()
+  {
+    cp includes/mac.sh /tmp/includes/mac.sh
+  }
+
+  motd_remote_mac_include()
+  {
+    curl -sL "${MAC_INCLUDE_URL}" -o /tmp/includes/mac.sh
+  }
+
+  motd_fetch_mac_include()
+  {
+    printf "Fetching mac include..."
+    if [ motd_is_dev ]; then
+        motd_local_mac_include
+    else
+        motd_remote_mac_include
+    fi
+    printf "done\n"
+  }
+
+  motd_local_linux_include()
+  {
+    cp includes/linux.sh /tmp/includes/linux.sh
+  }
+
+  motd_remote_linux_include()
+  {
+    curl -sL "${LINUX_INCLUDE_URL}" -o /tmp/includes/linux.sh
+  }
+
+  motd_fetch_linux_include()
+  {
+    printf "Fetching linux include..."
+    if [ motd_is_dev ]; then
+        motd_local_linux_include
+    else
+        motd_remote_linux_include
+    fi
+    printf "done\n"
+  }
+
+  motd_ensure_includes_dir_exists()
   {
     if [ ! -d "/tmp/includes" ]; then
       echo "Making includes directory"
       mkdir /tmp/includes
     fi
+  }
+
+  motd_fetch_includes()
+  {
+    motd_ensure_includes_dir_exists
 
     if [ ! -e "/tmp/includes/mac.sh" ]; then
-      printf "Fetching mac include..."
-      curl -sL "${MAC_INCLUDE_URL}" -o /tmp/includes/mac.sh
-      printf "done\n"
+        motd_fetch_mac_include
     fi
 
     if [ ! -e "/tmp/includes/linux.sh" ]; then
-      printf "Fetching linux include..."
-      curl -sL "${LINUX_INCLUDE_URL}" -o /tmp/includes/linux.sh
-      printf "done\n"
+        motd_fetch_linux_include
     fi
   }
 
