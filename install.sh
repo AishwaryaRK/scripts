@@ -9,7 +9,6 @@ TERMINAL="please open a new terminal window to view the motd"
 motd_install()
 {
   echo "installing motd.sh"
-
   # detect environment
   # http://stackoverflow.com/a/3826462
   # http://stackoverflow.com/a/17072017
@@ -21,7 +20,7 @@ motd_install()
   else
     ## production
     ## download latest script
-    curl "${MOTD_URL}" -o ~/.motd.sh
+    curl -sL "${MOTD_URL}" -o ~/.motd.sh
   fi
 
   # prompt user for weather (y/n)
@@ -159,4 +158,4 @@ motd_install()
   fi
 }
 
-motd_install "$@"
+motd_install
