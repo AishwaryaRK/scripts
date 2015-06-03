@@ -149,6 +149,7 @@ motd_configure()
 
   motd_local_mac_include()
   {
+    [ ! -e includes/mac.sh ] && echo 'local mac include file not present' && exit 1
     cp includes/mac.sh /tmp/includes/mac.sh
   }
 
@@ -170,6 +171,7 @@ motd_configure()
 
   motd_local_linux_include()
   {
+    [ ! -e includes/mac.sh ] && echo 'local linux include file not present' && exit 1
     cp includes/linux.sh /tmp/includes/linux.sh
   }
 
