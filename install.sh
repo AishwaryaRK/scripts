@@ -2,8 +2,8 @@
 
 MOTD_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/.motd.sh"
 PLIST_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/sh.motd.generator.plist"
-MAC_INCLUDE_URL="https://raw.githubusercontent.com/shadesoflight/scripts/dry-prep/includes/mac.sh"
-LINUX_INCLUDE_URL="https://raw.githubusercontent.com/shadesoflight/scripts/dry-prep/includes/linux.sh"
+MAC_INCLUDE_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/includes/mac.sh"
+LINUX_INCLUDE_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/includes/linux.sh"
 TERMINAL="please open a new terminal window to view the motd"
 
 # this defines commands used by the MOTD script
