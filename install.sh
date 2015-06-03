@@ -2,6 +2,8 @@
 
 MOTD_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/.motd.sh"
 PLIST_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/sh.motd.generator.plist"
+MAC_INCLUDE_URL="https://raw.githubusercontent.com/shadesoflight/scripts/dry-prep/includes/mac.sh"
+LINUX_INCLUDE_URL="https://raw.githubusercontent.com/shadesoflight/scripts/dry-prep/includes/linux.sh"
 TERMINAL="please open a new terminal window to view the motd"
 
 # this defines commands used by the MOTD script
@@ -136,6 +138,26 @@ motd_configure()
     done
   }
 
+  motd_fetch_includes()
+  {
+    if [ ! -d "includes" ]; then
+      echo "Making includes directory"
+      mkdir includes
+    fi
+
+    if [ ! -e "includes/mac.sh" ]; then
+      printf "Fetching mac include..."
+      curl -sL "${MAC_INCLUDE_URL}" -o includes/mac.sh
+      printf "done\n"
+    fi
+
+    if [ ! -e "includes/linux.sh" ]; then
+      printf "Fetching linux include..."
+      curl -sL "${LINUX_INCLUDE_URL}" -o includes/linux.sh
+      printf "done\n"
+    fi
+  }
+
   motd_configure_os()
   {
     # detect os
@@ -163,14 +185,15 @@ motd_configure()
     fi
   }
 
+  motd_fetch_includes
   motd_configure_os
+  motd_update_motd
 }
 
 motd_install()
 {
   echo "installing motd.sh"
   motd_configure
-  motd_update_motd
   motd_prompt_weather
   motd_prompt_stock
   motd_prompt_inspiration
