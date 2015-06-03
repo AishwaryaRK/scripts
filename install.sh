@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 MOTD_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/.motd.sh"
 PLIST_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/sh.motd.generator.plist"
 TERMINAL="please open a new terminal window to view the motd"
@@ -25,16 +23,14 @@ motd_install()
 
   # prompt user for weather (y/n)
   # if (y) then prompt for (auto - lookup by ip) or (enter your city, state/province)
-  while true; do
-    read -p "do you want to add the weather forecast to your motd? (y/n)" yn
+    while read -p "do you want to add the weather forecast to your motd? (y/n)" yn; do
       case $yn in
       [Yy]* )
         echo "please enter a location (e.g. address/city/location/zip)"
         read WEATHER
         sed -i bak -e "s/WEATHER=\"\"/WEATHER=\"$WEATHER\"/" ~/.motd.sh
         # now we want to ask user if they want fahrenheit or celsius
-        while true; do
-          read -p "do you want degrees in fahrenheit (y) or celsius (n)? (y/n)" yn
+        while read -p "do you want degrees in fahrenheit (y) or celsius (n)? (y/n)" yn; do
             case $yn in
                 [Yy]* )
                   echo "you selected fahrenheit!";
@@ -57,13 +53,11 @@ motd_install()
 
   # prompt user for stocks (yn)
   # if (y) then prompt for comma delimited stock symbols
-  while true; do
-    read -p "do you want to add stock quotes to your motd? (y/n)" yn
+  while read -p "do you want to add stock quotes to your motd? (y/n)" yn; do
       case $yn in
           [Yy]* )
             echo "you added stocks!";
-            echo "please enter stocks on NASDAQ separated by a comma (e.g. TSLA,SCTY)"
-            read STOCKS
+            read -p "please enter stocks on NASDAQ separated by a comma (.e.g TSLA,SCTY)" STOCKS
             sed -i bak -e "s/STOCKS=\"\"/STOCKS=\"$STOCKS\"/" ~/.motd.sh
             break;;
           [Nn]* ) break;;
@@ -72,8 +66,7 @@ motd_install()
   done
 
   # prompt user for quotes (y/n)
-  while true; do
-    read -p "do you want to add inspirational/motivational quotes to your motd? (y/n)" yn
+  while read -p "do you want to add inspirational/motivational quotes to your motd? (y/n)" yn; do
       case $yn in
           [Yy]* )
             echo "you added quotes!";

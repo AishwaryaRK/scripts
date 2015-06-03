@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 motd_uninstall()
 {
   echo "uninstalling motd.sh"
