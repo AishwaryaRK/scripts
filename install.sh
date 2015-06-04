@@ -234,7 +234,7 @@ motd_configure()
       echo ""
       exit 1
     else
-      echo "unknown operating system detecting"
+      echo "unknown operating system detected"
       exit 1
     fi
   }
