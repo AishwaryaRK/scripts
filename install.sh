@@ -12,9 +12,9 @@ motd_configure()
   motd_is_dev()
   {
     if [ "$MOTD_ENV" = "development" ]; then
-        return true
+        return true;
     else
-        return false
+        return false;
     fi
   }
 
@@ -38,7 +38,7 @@ motd_configure()
   # http://stackoverflow.com/a/17072017
   motd_update()
   {
-    if motd_is_dev; then
+    if [ motd_is_dev ]; then
       ## development
       motd_local_update
     else
@@ -161,7 +161,7 @@ motd_configure()
   motd_fetch_mac_include()
   {
     printf "Fetching mac include..."
-    if motd_is_dev; then
+    if [ motd_is_dev ]; then
         motd_local_mac_include
     else
         motd_remote_mac_include
@@ -183,7 +183,7 @@ motd_configure()
   motd_fetch_linux_include()
   {
     printf "Fetching linux include..."
-    if motd_is_dev; then
+    if [ motd_is_dev ]; then
         motd_local_linux_include
     else
         motd_remote_linux_include
