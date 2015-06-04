@@ -162,10 +162,13 @@ motd_configure()
   {
     printf "Fetching mac include..."
     if motd_is_dev; then
+        printf "from local..."
         motd_local_mac_include
     else
+        printf "from remote..."
         motd_remote_mac_include
     fi
+    chmod +x /tmp/includes/mac.sh
     printf "done\n"
   }
 
@@ -184,10 +187,13 @@ motd_configure()
   {
     printf "Fetching linux include..."
     if motd_is_dev; then
+        printf "from local..."
         motd_local_linux_include
     else
+        printf "from remote..."
         motd_remote_linux_include
     fi
+    chmod +x /tmp/includes/linux.sh
     printf "done\n"
   }
 
