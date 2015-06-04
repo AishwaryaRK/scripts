@@ -212,6 +212,25 @@ motd_configure()
     fi
   }
 
+  motd_post_install_instructions()
+  {
+      echo "please add (or ensure something similar exists) the following to the top of your ~/.zshrc or ~/.bashrc file"
+      echo ""
+      echo ""
+      echo "# ------ START OF SCRIPT ------"
+      echo ""
+      echo "# Display MotD"
+      echo "if [[ -e \$HOME/.motd ]]; then cat \$HOME/.motd; fi"
+      echo ""
+      echo "# ------  END OF SCRIPT  ------"
+      echo ""
+      echo ""
+      echo "successfully installed motd.sh"
+      bash ~/.motd.sh
+      echo "$TERMINAL"
+      exit 1
+  }
+
   motd_configure_os()
   {
     # detect os
