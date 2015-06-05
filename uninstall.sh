@@ -11,7 +11,8 @@ motd_uninstall()
     rm ~/Library/LaunchAgents/sh.motd.generator.plist
   elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     echo "detected linux"
-    (echo $CRONTAB | grep -v "$CRONJOB") | crontab -
+    CRONJOB="0 * * * * /home/$USER/.motd.sh"
+    (crontab -l | grep -v "$CRONJOB") | crontab -
   elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
     ## windows
     ## TODO: add support
