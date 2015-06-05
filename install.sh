@@ -33,120 +33,6 @@ motd_configure()
     curl -sL "${MOTD_URL}" -o ~/.motd.sh
   }
 
-  #update the MOTD script according to environment
-  # http://stackoverflow.com/a/3826462
-  # http://stackoverflow.com/a/17072017
-  motd_update()
-  {
-    if motd_is_dev; then
-      ## development
-      motd_local_update
-    else
-      ## production
-      motd_remote_update
-    fi
-  }
-
-  # allow script to be executed
-  motd_set_executable()
-  {
-    chmod +x ~/.motd.sh
-  }
-
-  motd_configure_weather_address()
-  {
-    sed -i bak -e "s/WEATHER=\"\"/WEATHER=\"$1\"/" ~/.motd.sh
-  }
-
-  motd_configure_weather_degrees()
-  {
-    sed -i bak -e "s/DEGREES=\"\"/DEGREES=\"$1\"/" ~/.motd.sh
-  }
-
-  # ask if installer should configure weather
-  motd_prompt_weather()
-  {
-    # prompt user for weather (y/n)
-    # if (y) then prompt for (auto - lookup by ip) or (enter your city, state/province)
-    while read -p "do you want to add the weather forecast to your motd? (y/n)" yn; do
-      case $yn in
-      [Yy]* )
-        echo "please enter a location (e.g. address/city/location/zip)"
-        read WEATHER
-        WEATHER=`echo "$WEATHER"|sed 's/ /%20/g'`
-        motd_configure_weather_address $WEATHER
-        # now we want to ask user if they want fahrenheit or celsius
-        while read -p "do you want degrees in fahrenheit (y) or celsius (n)? (y/n)" yn; do
-            case $yn in
-                [Yy]* )
-                  echo "you selected fahrenheit!";
-                  motd_configure_weather_degrees f
-                  break;;
-                [Nn]* )
-                  echo "you selected celsius!";
-                  motd_configure_weather_degrees c
-                  break;;
-                * ) echo "please answer fahrenheit (y) or celsius (n).";;
-            esac
-        done
-        break;;
-      [Nn]* )
-        break;;
-      * )
-        echo "please answer yes (y) or no (n).";;
-      esac
-    done
-  }
-
-  motd_configure_stocks()
-  {
-    sed -i bak -e "s/STOCKS=\"\"/STOCKS=\"$1\"/" ~/.motd.sh
-  }
-
-  # ask if installer should configure stocks
-  motd_prompt_stocks()
-  {
-    # prompt user for stocks (yn)
-    # if (y) then prompt for comma delimited stock symbols
-    while read -p "do you want to add stock quotes to your motd? (y/n)" yn; do
-        case $yn in
-            [Yy]* )
-              echo "you added stocks!";
-              read -p "please enter stocks on NASDAQ separated by a comma (.e.g TSLA,SCTY)" STOCKS
-              # strip whitespace from stocks
-              # http://unix.stackexchange.com/a/156581
-              STOCKS="$(echo "$STOCKS" | tr -d ' ')"
-              motd_configure_stocks $STOCKS
-              break;;
-            [Nn]* ) break;;
-            * ) echo "please answer yes (y) or no (n).";;
-        esac
-    done
-  }
-
-  motd_configure_quotes()
-  {
-    sed -i bak -e "s/QUOTES=\"\"/QUOTES=\"$1\"/" ~/.motd.sh
-  }
-
-  # ask if installer should configure 
-  motd_prompt_quotes()
-  {
-    # prompt user for quotes (y/n)
-    while read -p "do you want to add inspirational/motivational quotes to your motd? (y/n)" yn; do
-        case $yn in
-            [Yy]* )
-              echo "you added quotes!";
-              motd_configure_quotes y
-              break;;
-            [Nn]* )
-              motd_configure_quotes n
-              break;;
-            * ) echo "please answer yes (y) or no (n).";;
-        esac
-    done
-  }
-
   motd_local_mac_include()
   {
     [ ! -e includes/mac.sh ] && echo 'local mac include file not present' && exit 1
@@ -245,6 +131,101 @@ motd_configure()
     fi
   }
 
+  motd_configure_weather_address()
+  {
+    sed -i bak -e "s/WEATHER=\"\"/WEATHER=\"$1\"/" ~/.motd.sh
+  }
+
+  motd_configure_weather_degrees()
+  {
+    sed -i bak -e "s/DEGREES=\"\"/DEGREES=\"$1\"/" ~/.motd.sh
+  }
+
+  # ask if installer should configure weather
+  motd_prompt_weather()
+  {
+    # prompt user for weather (y/n)
+    # if (y) then prompt for (auto - lookup by ip) or (enter your city, state/province)
+    while read -p "do you want to add the weather forecast to your motd? (y/n)" yn; do
+      case $yn in
+      [Yy]* )
+        echo "please enter a location (e.g. address/city/location/zip)"
+        read WEATHER
+        WEATHER=`echo "$WEATHER"|sed 's/ /%20/g'`
+        motd_configure_weather_address $WEATHER
+        # now we want to ask user if they want fahrenheit or celsius
+        while read -p "do you want degrees in fahrenheit (y) or celsius (n)? (y/n)" yn; do
+            case $yn in
+                [Yy]* )
+                  echo "you selected fahrenheit!";
+                  motd_configure_weather_degrees f
+                  break;;
+                [Nn]* )
+                  echo "you selected celsius!";
+                  motd_configure_weather_degrees c
+                  break;;
+                * ) echo "please answer fahrenheit (y) or celsius (n).";;
+            esac
+        done
+        break;;
+      [Nn]* )
+        break;;
+      * )
+        echo "please answer yes (y) or no (n).";;
+      esac
+    done
+  }
+
+  motd_configure_stocks()
+  {
+    sed -i bak -e "s/STOCKS=\"\"/STOCKS=\"$1\"/" ~/.motd.sh
+  }
+
+  # ask if installer should configure stocks
+  motd_prompt_stocks()
+  {
+    # prompt user for stocks (yn)
+    # if (y) then prompt for comma delimited stock symbols
+    while read -p "do you want to add stock quotes to your motd? (y/n)" yn; do
+        case $yn in
+            [Yy]* )
+              echo "you added stocks!";
+              read -p "please enter stocks on NASDAQ separated by a comma (.e.g TSLA,SCTY)" STOCKS
+              # strip whitespace from stocks
+              # http://unix.stackexchange.com/a/156581
+              STOCKS="$(echo "$STOCKS" | tr -d ' ')"
+              motd_configure_stocks $STOCKS
+              break;;
+            [Nn]* ) break;;
+            * ) echo "please answer yes (y) or no (n).";;
+        esac
+    done
+  }
+
+  motd_configure_quotes()
+  {
+    sed -i bak -e "s/QUOTES=\"\"/QUOTES=\"$1\"/" ~/.motd.sh
+  }
+
+  # ask if installer should configure 
+  motd_prompt_quotes()
+  {
+    # prompt user for quotes (y/n)
+    while read -p "do you want to add inspirational/motivational quotes to your motd? (y/n)" yn; do
+        case $yn in
+            [Yy]* )
+              echo "you added quotes!";
+              motd_configure_quotes y
+              break;;
+            [Nn]* )
+              motd_configure_quotes n
+              break;;
+            * ) echo "please answer yes (y) or no (n).";;
+        esac
+    done
+  }
+
+
   motd_post_install_instructions()
   {
       echo "please add (or ensure something similar exists) the following to the top of your ~/.zshrc or ~/.bashrc file"
@@ -264,9 +245,24 @@ motd_configure()
       exit 1
   }
 
+  #update the MOTD script according to environment
+  # http://stackoverflow.com/a/3826462
+  # http://stackoverflow.com/a/17072017
+  motd_init()
+  {
+    if motd_is_dev; then
+      ## development
+      motd_local_update
+    else
+      ## production
+      motd_remote_update
+    fi
+    chmod +x ~/.motd.sh
+  }
+
   motd_fetch_includes
   motd_configure_os
-  motd_update
+  motd_init
 }
 
 motd_install()
