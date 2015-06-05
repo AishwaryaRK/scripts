@@ -104,33 +104,6 @@ motd_configure()
     fi
   }
 
-  motd_configure_os()
-  {
-    # detect os
-    echo "detecting operating system"
-
-    if [ "$(uname)" == "Darwin" ]; then
-      ## mac os x
-      echo "detected mac os x"
-      source /tmp/includes/mac.sh
-    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-      ## linux
-      echo "detected linux"
-      source /tmp/includes/linux.sh
-    elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
-      ## windows
-      ## TODO: add support
-      echo "detected windows"
-      echo "windows is not currently supported"
-      ## TODO: add github issue for this
-      echo ""
-      exit 1
-    else
-      echo "unknown operating system detected"
-      exit 1
-    fi
-  }
-
   motd_configure_weather_address()
   {
     sed -i bak -e "s/WEATHER=\"\"/WEATHER=\"$1\"/" ~/.motd.sh
@@ -207,7 +180,7 @@ motd_configure()
     sed -i bak -e "s/QUOTES=\"\"/QUOTES=\"$1\"/" ~/.motd.sh
   }
 
-  # ask if installer should configure 
+  # ask if installer should configure
   motd_prompt_quotes()
   {
     # prompt user for quotes (y/n)
@@ -259,6 +232,34 @@ motd_configure()
     fi
     chmod +x ~/.motd.sh
   }
+
+  motd_configure_os()
+  {
+    # detect os
+    echo "detecting operating system"
+
+    if [ "$(uname)" == "Darwin" ]; then
+      ## mac os x
+      echo "detected mac os x"
+      source /tmp/includes/mac.sh
+    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+      ## linux
+      echo "detected linux"
+      source /tmp/includes/linux.sh
+    elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
+      ## windows
+      ## TODO: add support
+      echo "detected windows"
+      echo "windows is not currently supported"
+      ## TODO: add github issue for this
+      echo ""
+      exit 1
+    else
+      echo "unknown operating system detected"
+      exit 1
+    fi
+  }
+
 
   motd_fetch_includes
   motd_configure_os
