@@ -17,12 +17,14 @@ motd_uninstall()
     rm ~/Library/LaunchAgents/sh.motd.generator.plist
   elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     echo "detected linux"
+
+    # remove cronjob
     CRONCMD="/home/$USER/.motd.sh"
+    crontab -l | grep -v $CRONCMD | crontab -
 
     # remove from bashrc
     sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" ~/.bashrc
 
-    crontab -l | grep -v $CRONCMD | crontab -
   elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
     ## windows
     ## TODO: add support
