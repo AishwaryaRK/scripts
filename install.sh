@@ -5,6 +5,8 @@ PLIST_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/sh.m
 MAC_INCLUDE_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/includes/mac.sh"
 LINUX_INCLUDE_URL="https://raw.githubusercontent.com/messageoftheday/scripts/master/includes/linux.sh"
 TERMINAL="please open a new terminal window to view the motd"
+POST_INSTALL_START="### MOTD Script Start ###"
+POST_INSTALL_END="### MOTD Script End ###"
 
 # this defines commands used by the MOTD script
 motd_configure()
@@ -198,24 +200,50 @@ motd_configure()
     done
   }
 
+  # ask if installer should configure
+  motd_prompt_auto_bashrc()
+  {
+    # prompt user for auto bashrc
+    while read -p "Automatically update bashrc (answering no requires you do it manually)? (y/n)" yn; do
+        case $yn in
+            [Yy]* )
+              echo "bashrc configured!";
+              motd_configure_auto_bashrc
+              break;;
+            [Nn]* )
+              motd_post_install_instructions
+              break;;
+            * ) echo "please answer yes (y) or no (n).";;
+        esac
+    done
+  }
+
+  motd_configure_auto_bashrc()
+  {
+      sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" ~/.bashrc
+
+      cat << EOF >> ~/.bashrc
+$POST_INSTALL_START
+
+      # Display MotD
+      if [[ -e \$HOME/.motd ]]; then cat \$HOME/.motd; fi
+
+$POST_INSTALL_END
+EOF
+  }
 
   motd_post_install_instructions()
   {
-      echo "please add (or ensure something similar exists) the following to the top of your ~/.zshrc or ~/.bashrc file"
-      echo ""
-      echo ""
-      echo "# ------ START OF SCRIPT ------"
-      echo ""
-      echo "# Display MotD"
-      echo "if [[ -e \$HOME/.motd ]]; then cat \$HOME/.motd; fi"
-      echo ""
-      echo "# ------  END OF SCRIPT  ------"
-      echo ""
-      echo ""
-      echo "successfully installed motd.sh"
-      bash ~/.motd.sh
-      echo "$TERMINAL"
-      exit 1
+      cat << EOF
+please add (or ensure something similar exists) the following to the top of your ~/.zshrc or ~/.bashrc file
+
+$POST_INSTALL_START
+
+      # Display MotD
+      if [[ -e \$HOME/.motd ]]; then cat \$HOME/.motd; fi
+
+$POST_INSTALL_END
+EOF
   }
 
   #update the MOTD script according to environment
@@ -274,7 +302,11 @@ motd_install()
   motd_prompt_stocks
   motd_prompt_quotes
   motd_setup_generator
-  motd_post_install_instructions
+  motd_prompt_auto_bashrc
+  echo "successfully installed motd.sh"
+  bash ~/.motd.sh
+  echo "$TERMINAL"
+  exit 0
 }
 
 motd_install
