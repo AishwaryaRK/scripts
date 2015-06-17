@@ -13,8 +13,14 @@ dynamic message of the day (~/.motd) generator for :apple: Mac and :penguin: Lin
 * want to change the weather, stocks, or another setting without having to re-install?  simply open up `~/.motd.sh` file in your favorite editor (e.g. `vim ~/.motd.sh`), and then modify it per this example below
 
 ```diff
--WEATHER="San Jose, CA"
-+WEATHER="San Francisco, CA"
+-WEATHER="San%20Jose,%20CA"
++WEATHER="San%20Francisco,%20CA"
+```
+
+* just make a change to your `~/.motd.sh` file (or simply want your `~/motd` to be updated?  simply execute the shell script:
+
+```bash
+sh ~/.motd.sh
 ```
 
 [motd-gif]: https://media.giphy.com/media/3oEduGuyCpv5gwNkek/giphy.gif
