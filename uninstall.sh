@@ -22,8 +22,15 @@ motd_uninstall()
     CRONCMD="/home/$USER/.motd.sh"
     crontab -l | grep -v $CRONCMD | crontab -
 
-    # remove from bashrc
-    sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" ~/.bashrc
+    if [ -f ~/.bashrc ]; then
+      # remove from bashrc
+      sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" ~/.bashrc
+    fi
+
+    if [ -f ~/.zshrc ]; then
+      # remove from zshrc
+      sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" ~/.zshhrc
+    fi
 
   elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
     ## windows
