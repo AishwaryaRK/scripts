@@ -203,20 +203,20 @@ motd_configure()
   # ask if installer should configure
   motd_prompt_auto_rc()
   {
-    # prompt user for auto bashrc
     while read -p "Automatically update rc file (answering no requires you do it manually)? (y/n)" yn; do
         case $yn in
             [Yy]* )
               while read -p "Bash or Zsh? (bash/zsh)" termtype; do
                 case $termtype in
-                  zsh)
+                  zsh )
                     echo "zshrc configured!";
                     motd_configure_auto_rc ~/.zshrc
-                    ;;
-                  bash)
+                    break;;
+                  bash )
                     echo "bashrc configured!";
                     motd_configure_auto_rc ~/.bashrc
-                    ;;
+                    break;;
+                  * ) echo "please answer bash or zsh.";;
                 esac
               done
               break;;
@@ -312,7 +312,7 @@ motd_install()
   motd_prompt_stocks
   motd_prompt_quotes
   motd_setup_generator
-  motd_prompt_auto_bashrc
+  motd_prompt_auto_rc
   echo "successfully installed motd.sh"
   bash ~/.motd.sh
   echo "$TERMINAL"
