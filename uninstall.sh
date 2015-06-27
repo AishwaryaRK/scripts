@@ -9,8 +9,16 @@ motd_uninstall()
     ## mac os x
     echo "detected mac os x"
 
-    # remove from bashrc
-    sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" ~/.bashrc
+    if [ -f ~/.bashrc ]; then
+      # remove from bashrc
+      sed -i '.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" ~/.bashrc
+    fi
+
+
+    if [ -f ~/.zshrc ]; then
+      # remove from zshrc
+      sed -i '.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" ~/.zshrc
+    fi
 
     # http://nathangrigg.net/2012/07/schedule-jobs-using-launchd/
     launchctl unload ~/Library/LaunchAgents/sh.motd.generator.plist
