@@ -230,6 +230,11 @@ motd_configure()
 
   motd_configure_auto_rc()
   {
+      if ! [ -f $1 ]; then
+        # ensure file exists
+        touch $1
+      fi
+
       sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" $1
 
       cat << EOF >> $1
