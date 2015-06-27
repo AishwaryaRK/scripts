@@ -29,7 +29,7 @@ motd_uninstall()
 
     if [ -f ~/.zshrc ]; then
       # remove from zshrc
-      sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" ~/.zshhrc
+      sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" ~/.zshrc
     fi
 
   elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
