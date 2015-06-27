@@ -201,14 +201,24 @@ motd_configure()
   }
 
   # ask if installer should configure
-  motd_prompt_auto_bashrc()
+  motd_prompt_auto_rc()
   {
     # prompt user for auto bashrc
-    while read -p "Automatically update bashrc (answering no requires you do it manually)? (y/n)" yn; do
+    while read -p "Automatically update rc file (answering no requires you do it manually)? (y/n)" yn; do
         case $yn in
             [Yy]* )
-              echo "bashrc configured!";
-              motd_configure_auto_bashrc
+              while read -p "Bash or Zsh? (bash/zsh)" termtype; do
+                case $termtype in
+                  zsh)
+                    echo "zshrc configured!";
+                    motd_configure_auto_rc ~/.zshrc
+                    ;;
+                  bash)
+                    echo "bashrc configured!";
+                    motd_configure_auto_rc ~/.bashrc
+                    ;;
+                esac
+              done
               break;;
             [Nn]* )
               motd_post_install_instructions
@@ -218,11 +228,11 @@ motd_configure()
     done
   }
 
-  motd_configure_auto_bashrc()
+  motd_configure_auto_rc()
   {
-      sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" ~/.bashrc
+      sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" $1
 
-      cat << EOF >> ~/.bashrc
+      cat << EOF >> $1
 $POST_INSTALL_START
 
       # Display MotD
