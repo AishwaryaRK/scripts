@@ -25,7 +25,7 @@ motd_configure()
   {
     cp .motd.sh ~/.motd.sh
     ## replace http://motd.sh with http://localhost:3000
-    #sed -i bak -e "s/http:\/\/motd.sh/http:\/\/localhost:3000/" ~/.motd.sh
+    #sed -i'bak' -e "s/http:\/\/motd.sh/http:\/\/localhost:3000/" ~/.motd.sh
   }
 
   # fetch an MOTD script update from the server
@@ -108,12 +108,12 @@ motd_configure()
 
   motd_configure_weather_address()
   {
-    sed -i bak -e "s/WEATHER=\"\"/WEATHER=\"$1\"/" ~/.motd.sh
+    sed -i'bak' -e "s/WEATHER=\"\"/WEATHER=\"$1\"/" ~/.motd.sh
   }
 
   motd_configure_weather_degrees()
   {
-    sed -i bak -e "s/DEGREES=\"\"/DEGREES=\"$1\"/" ~/.motd.sh
+    sed -i'bak' -e "s/DEGREES=\"\"/DEGREES=\"$1\"/" ~/.motd.sh
   }
 
   # ask if installer should configure weather
@@ -153,7 +153,7 @@ motd_configure()
 
   motd_configure_stocks()
   {
-    sed -i bak -e "s/STOCKS=\"\"/STOCKS=\"$1\"/" ~/.motd.sh
+    sed -i'bak' -e "s/STOCKS=\"\"/STOCKS=\"$1\"/" ~/.motd.sh
   }
 
   # ask if installer should configure stocks
@@ -179,7 +179,7 @@ motd_configure()
 
   motd_configure_quotes()
   {
-    sed -i bak -e "s/QUOTES=\"\"/QUOTES=\"$1\"/" ~/.motd.sh
+    sed -i'bak' -e "s/QUOTES=\"\"/QUOTES=\"$1\"/" ~/.motd.sh
   }
 
   # ask if installer should configure
@@ -235,7 +235,7 @@ motd_configure()
         touch $1
       fi
 
-      sed -i'.bak' "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" $1
+      sed -i'.bak' -e "/$POST_INSTALL_START/,/$POST_INSTALL_END/d" $1
 
       cat << EOF >> $1
 $POST_INSTALL_START
